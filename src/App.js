@@ -1,24 +1,41 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
+import { Switch, Route } from 'react-router-dom'
+
+import { useSelector } from 'react-redux';
+
+import Login from './components/login';
+
+import Navbar from './components/Navbar/navbar';
+
+import HomePage from './Pages/homePage';
+
+
+
+
+const App = () => {
+  const user = useSelector( state => state.account.user ) ;
+  
+  
+
+  if(!user){
+    return <Login />
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+
+        <Switch>
+          <Route exact path='/' >
+            <HomePage  /> 
+          </Route>
+          
+          
+        </Switch>
+
+    </>
   );
 }
 
