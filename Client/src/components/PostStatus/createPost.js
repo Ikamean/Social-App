@@ -15,9 +15,9 @@ import {  addNewPost } from '../../redux/reducers/postReducer';
 import { createPost } from '../../axios/postService';
 
 let socket;
-//const ENDPOINT = process.env.REACT_APP_ENDPOINT 
 
-const ENDPOINT = `https://social-app-bitcamp.herokuapp.com/`
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
+
 
 const Post = () => {
     const [ postMessage, setPostMessage ] = useState('');

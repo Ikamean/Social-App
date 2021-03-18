@@ -17,9 +17,9 @@ import { updatePostComments } from '../../../redux/reducers/postReducer';
 import { useDispatch } from 'react-redux';
 
 let socket;
-//const ENDPOINT = process.env.REACT_APP_ENDPOINT 
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
 
-const ENDPOINT = `https://social-app-bitcamp.herokuapp.com/`
+
 
 
 const CommentsForm = ({ post }) => {

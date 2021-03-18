@@ -6,12 +6,11 @@ import io from "socket.io-client";
 
 import styled from 'styled-components';
 
-//const ENDPOINT = process.env.REACT_APP_ENDPOINT //
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
 
-const ENDPOINT = `https://social-app-bitcamp.herokuapp.com/`
 
-
-export let socket;
+let socket;
 
 
 const User = ({ user }) => {
@@ -27,33 +26,24 @@ const User = ({ user }) => {
         
         //setShowDetails(!showDetails);
         //console.log(showDetails);
-        //online && console.log('user is online')
     }
 
     let loggedUser = JSON.parse(localStorage.getItem('user'));
 
+    
 
-  
     useEffect(() => {
         socket = io(ENDPOINT);
 
         let loggedUserSubID = loggedUser.sub;
 
-        socket.emit('join', { name, loggedUserSubID });
-        
-        socket.on('online', ({ userName, userSubId }) =>{
-            if(userSubId === subID){
-                setOnline(true);
-            }
-        } );
-
-        return () => {
-            socket.off();
+        if( loggedUserSubID === subID ){
+            socket.emit('join', ()=> setOnline(true));   
         }
 
-    }, [loggedUser,name,subID])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loggedUser])
 
-   
 
     return (
             <Profile onClick={ ()=> handleClick()}>

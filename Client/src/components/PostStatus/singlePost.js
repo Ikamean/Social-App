@@ -15,9 +15,9 @@ import {  removePostDispatcher } from '../../redux/reducers/postReducer';
 import PostComments from './postComments/postComments';
 
 let socket;
-const ENDPOINT = `https://social-app-bitcamp.herokuapp.com/`
 
-//const ENDPOINT = process.env.REACT_APP_ENDPOINT 
+
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
 
 
 const SinglePost = ({ post }) => {

@@ -22,7 +22,14 @@ const Login = () => {
     const onSuccess = async (res) => {
         
         let verification = await verifyToken(res.tokenId);
-        localStorage.setItem('user', JSON.stringify(verification));
+        
+        const loggedUser = {
+            sub: verification.sub,
+            name: verification.name,
+            picture: verification.picture
+        }
+
+        localStorage.setItem('user', JSON.stringify(loggedUser));
 
         await dispatch(initializeAccount(verification));
         // Save Liked Posts into Localstorage when log In
