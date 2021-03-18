@@ -8,7 +8,7 @@ const path = require("path");
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
     cors: {
-        origins: ['https://social-app-bitcamp.herokuapp.com/']
+        origins: ['http://localhost:3000/']
     }
 });
 
