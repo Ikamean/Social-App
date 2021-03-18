@@ -16,14 +16,11 @@ const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
 const postRouter = require('./routes/post');
 
+
+
 const { removePost } = require('./utils/postsHandler');
 
-
-
-app.use(express.static('build'))
-app.get("*", (req, res) => { res.sendFile(path.join( __dirname + "/build/index.html" )); });
 app.use(express.json());
-//app.use(express.static('build'));
 app.use(cors());
 
 
@@ -71,9 +68,13 @@ io.on('connect', (socket) => {
 
 
 
-app.get('/', (req,res) => {
-    res.send('Hello World');
-})
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, '/build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname,  'build', 'index.html'));
+    })
+}
 
 
 http.listen( PORT,()=>console.log(`Server is running on port ${PORT}`));
