@@ -1,8 +1,16 @@
 ## Visit Live Project on : [Social App Project](https://social-app-bitcamp.herokuapp.com/)
 
-project is under development stage, so expect some bugs.
+### `project is under development stage, so expect some bugs.`
 
 ## Used Technologies : [Mern Stack](https://www.mongodb.com/mern-stack) + [socket.io](https://socket.io/)
+
+### `To start development Server`
+
+In the main directory, you can run:
+
+### `npm run dev`
+
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
 
 # Getting Started with Create React App
 
@@ -10,7 +18,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+In the client project directory, you can run:
 
 ### `npm start`
 
