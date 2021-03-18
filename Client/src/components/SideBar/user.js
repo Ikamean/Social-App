@@ -38,7 +38,8 @@ const User = ({ user }) => {
         let loggedUserSubID = loggedUser.sub;
 
         if( loggedUserSubID === subID ){
-            socket.emit('join', ()=> setOnline(true));   
+            socket.emit('join');
+            socket.on('online', ()=> setOnline(true))   
         }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

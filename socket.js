@@ -3,12 +3,9 @@ const { removePost } = require('./utils/postsHandler');
 
 module.exports = (io) => io.on('connect', (socket) => {
     
-    socket.on('join', ( callback ) => {
-
+    socket.on('join', () => {
         
-        //io.emit('online');
-
-        callback();
+        io.emit('online');
     });
 
     socket.on('createPost', (res, callback) => {
