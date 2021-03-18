@@ -6,7 +6,10 @@ import io from "socket.io-client";
 
 import styled from 'styled-components';
 
-const ENDPOINT = process.env.REACT_APP_ENDPOINT //
+//const ENDPOINT = process.env.REACT_APP_ENDPOINT //
+
+const ENDPOINT = `https://social-app-bitcamp.herokuapp.com/`
+
 
 export let socket;
 
