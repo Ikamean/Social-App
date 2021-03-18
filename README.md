@@ -1,3 +1,7 @@
+# Visit Live Project on : [Social App Project](https://social-app-bitcamp.herokuapp.com/);
+
+# Used Technologies : [Mern Stack](https://www.mongodb.com/mern-stack) + [socket.io](https://socket.io/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
