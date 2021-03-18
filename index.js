@@ -19,9 +19,9 @@ const postRouter = require('./routes/post');
 
 const { removePost } = require('./utils/postsHandler');
 
-app.use(express.static(path.join(__dirname, "./build")));
+//app.use(express.static(path.join(__dirname, "./build")));
 app.use(express.json());
-//app.use(express.static('build'));
+app.use(express.static('build'));
 app.use(cors());
 
 
