@@ -3,6 +3,8 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
+const path = require("path");
+
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
     cors: {
@@ -17,9 +19,9 @@ const postRouter = require('./routes/post');
 
 const { removePost } = require('./utils/postsHandler');
 
-
+app.use(express.static(path.join(__dirname, "./build")));
 app.use(express.json());
-app.use(express.static('build'));
+//app.use(express.static('build'));
 app.use(cors());
 
 
