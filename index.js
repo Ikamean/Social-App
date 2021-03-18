@@ -20,6 +20,7 @@ const postRouter = require('./routes/post');
 
 const { removePost } = require('./utils/postsHandler');
 
+app.use(express.static('build'));
 app.use(express.json());
 app.use(cors());
 
@@ -68,9 +69,9 @@ io.on('connect', (socket) => {
 
 
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('build'));
-}
+
+
+
 
 
 http.listen( PORT,()=>console.log(`Server is running on port ${PORT}`));
