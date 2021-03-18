@@ -26,7 +26,8 @@ const Login = () => {
         const loggedUser = {
             sub: verification.sub,
             name: verification.name,
-            picture: verification.picture
+            picture: verification.picture,
+            given_name: verification.given_name
         }
 
         localStorage.setItem('user', JSON.stringify(loggedUser));
