@@ -8,14 +8,13 @@ const path = require("path");
 const http = require('http').Server(app);
 const io = require('socket.io')(http, {
     cors: {
-        origins: ['https://bitcamp-social-app.herokuapp.com/']
+        origins: ['https://social-app-bitcamp.herokuapp.com/']
     }
 });
 
 const loginRouter = require('./routes/login');
 const usersRouter = require('./routes/users');
 const postRouter = require('./routes/post');
-
 
 
 const { removePost } = require('./utils/postsHandler');
