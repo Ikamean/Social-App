@@ -30,7 +30,6 @@ app.use('/api/post', postRouter);
 const PORT = process.env.PORT || 5000;
 
 io.on('connect', (socket) => {
-    //console.log('a user connected');
     
     socket.on('join', ( { name, loggedUserSubID } ) => {
 
@@ -62,7 +61,6 @@ io.on('connect', (socket) => {
 
     socket.on('disconnect', () => {
        // console.log('user disconnected');
-       
     });
 
 });
