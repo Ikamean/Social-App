@@ -1,8 +1,8 @@
-# Visit Live Project on : [Social App Project](https://social-app-bitcamp.herokuapp.com/)
+## Visit Live Project on : [Social App Project](https://social-app-bitcamp.herokuapp.com/)
 
 project is under development stage, so expect some bugs.
 
-# Used Technologies : [Mern Stack](https://www.mongodb.com/mern-stack) + [socket.io](https://socket.io/)
+## Used Technologies : [Mern Stack](https://www.mongodb.com/mern-stack) + [socket.io](https://socket.io/)
 
 # Getting Started with Create React App
 
