@@ -42,8 +42,6 @@ const Logout = ({ open }) => {
         localStorage.clear();
         history.push('/');
 
-        socket.disconnect();
-        socket.off();
     }
 
     return( 
