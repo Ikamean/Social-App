@@ -33,7 +33,6 @@ const DisplayPost = () => {
 
             await socket.on('newPost', newPost => {
 
-                console.log('dispatching post',newPost);
                 dispatch(addNewPost(newPost))
             });
 
@@ -50,7 +49,10 @@ const DisplayPost = () => {
         
         postsOperationsHandler();
 
-        
+        return () => {
+            socket.disconnect();
+            socket.off();
+        }
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);

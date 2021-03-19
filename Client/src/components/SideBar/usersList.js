@@ -21,7 +21,7 @@ const Users = () => {
     const dispatch = useDispatch();
     const usersList = useSelector( state => state.users.usersList );
 
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    
 
     useEffect(()=>{
         dispatch(initUsersList());
@@ -30,13 +30,16 @@ const Users = () => {
 
         socket.on('online', ({ onlineUsers }) => {
             dispatch(initOnlineUsers(onlineUsers))
-            console.log(onlineUsers);
         });
 
         socket.on('userLoggedOut', ({ onlineUsers }) =>{
             dispatch(initOnlineUsers(onlineUsers))
-            console.log(onlineUsers);
         });
+
+        return () => {
+            socket.disconnect();
+            socket.off();
+        }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
