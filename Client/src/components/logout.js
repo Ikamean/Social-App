@@ -1,6 +1,8 @@
 import React from 'react';
 import { GoogleLogout } from 'react-google-login';
 
+import io from "socket.io-client";
+
 import { FcGoogle } from 'react-icons/fc';
 import { BsFillCircleFill } from 'react-icons/bs';
 
@@ -12,6 +14,11 @@ import { logoutAccount } from '../redux/reducers/accountReducer';
 
 import styled from 'styled-components';
 
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
+
+
+let socket;
 
 
 const client_id = process.env.REACT_APP_CLIENT_ID;
@@ -22,12 +29,18 @@ const Logout = ({ open }) => {
 
     let profileObj = localStorage.getItem('user');
     profileObj = JSON.parse(profileObj);
-    const { picture, name } = profileObj;
+    const { picture, name, sub } = profileObj;
+    
 
     const onLogoutSuccess = (res) =>{
+        socket = io(ENDPOINT);
+        socket.emit('logout', { subID : sub });
+
         dispatch( logoutAccount() );
         localStorage.clear();
         history.push('/');
+
+        
     }
 
     return( 

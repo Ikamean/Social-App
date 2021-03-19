@@ -1,14 +1,21 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import io from "socket.io-client";
+
 
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { initAllPosts } from '../../redux/reducers/postReducer';
+import { initAllPosts, addNewPost, removePostDispatcher, updatePostComments } from '../../redux/reducers/postReducer';
 
 import SinglePost from './singlePost';
 
+
+let socket;
+
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`;
 
 
 const DisplayPost = () => {
@@ -17,15 +24,36 @@ const DisplayPost = () => {
     
 
     useEffect( () => {
+
+        socket=io(ENDPOINT);
         
-        const primalInitialization = async () => {
+        const postsOperationsHandler = async () => {
+
             await dispatch(initAllPosts());
+
+            await socket.on('newPost', newPost => {
+
+                console.log('dispatching post',newPost);
+                dispatch(addNewPost(newPost))
+            });
+
+            await socket.on('removedPostId', ( { removedPostId } ) => {
+                dispatch(removePostDispatcher(removedPostId));
+            })
+
+            await socket.on('updatedPostWithComments', ( { post } ) => {
+                
+                dispatch(updatePostComments(post));
+                
+            })
         }
         
-        primalInitialization();
+        postsOperationsHandler();
+
+        
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch]);
 
 
     return (

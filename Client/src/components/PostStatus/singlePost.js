@@ -8,9 +8,8 @@ import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
 
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-import { deletePost, likePost, getLikeStateForPost } from '../../axios/postService';
-import { useDispatch } from 'react-redux';
-import {  removePostDispatcher } from '../../redux/reducers/postReducer';
+import { likePost, getLikeStateForPost } from '../../axios/postService';
+
 
 import PostComments from './postComments/postComments';
 
@@ -21,7 +20,6 @@ const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP
 
 
 const SinglePost = ({ post }) => {
-    const dispatch = useDispatch();
     
     const { authorName, authorPicture, content, creationDate, id, authorId, likes} = post;
 
@@ -44,14 +42,7 @@ const SinglePost = ({ post }) => {
     const removePost =  async () => {
         socket = io(ENDPOINT);
 
-        await deletePost(id, authorId);
-
-        socket.emit('removePost', ( id ))
-
-        socket.on('updatePostsAfterRemovingOne', ( { posts } ) => {
-            dispatch(removePostDispatcher(posts));
-        })
-
+        socket.emit('removePost', ({ id , authorId }))
         
     }
 

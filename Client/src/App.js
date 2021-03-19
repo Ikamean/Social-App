@@ -13,7 +13,6 @@ import HomePage from './Pages/homePage';
 
 
 
-
 const App = () => {
   const user = useSelector( state => state.account.user ) ;
   

@@ -3,7 +3,6 @@ const Post = require('../models/post');
 const Account = require('../models/account');
 
 
-
 const postRouter = express.Router();
 
 postRouter.post('/likes/:id', async ( req,res ) => {
@@ -67,9 +66,9 @@ postRouter.post('/likes/:id', async ( req,res ) => {
 
 });
 
-const randomID = () => '_' + Math.random().toString(36).substr(2, 9);
+// const randomID = () => '_' + Math.random().toString(36).substr(2, 9);
 
-postRouter.post('/comments/:id' , async ( req, res ) => {
+/*postRouter.post('/comments/:id' , async ( req, res ) => {
     const id = req.params.id;
     const body = req.body;
 
@@ -97,8 +96,9 @@ postRouter.post('/comments/:id' , async ( req, res ) => {
     res.json(updatedComments)
 
 })
+*/
 
-postRouter.post('/', async ( req,res ) => {
+/*postRouter.post('/', async ( req,res ) => {
 
     const body = req.body;
 
@@ -130,6 +130,8 @@ postRouter.post('/', async ( req,res ) => {
     res.status(200).json(newPost);
 });
 
+*/
+
 postRouter.get('/', async (req,res) => {
     let postList = await Post.find({});
 
@@ -149,6 +151,8 @@ postRouter.get('/:id', async ( req, res ) => {
     res.json(allreadyLiked)
 })
 
+
+/*
 postRouter.delete('/', async ( req,res ) => {
     const body = req.body;
     const postId = body.id;
@@ -169,5 +173,6 @@ postRouter.delete('/', async ( req,res ) => {
     
 })
 
+*/
 
 module.exports = postRouter;

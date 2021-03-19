@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import { GrStatusGoodSmall } from 'react-icons/gr';
+import { useSelector } from 'react-redux';
 
-import io from "socket.io-client";
+import { GrStatusGoodSmall } from 'react-icons/gr';
 
 import styled from 'styled-components';
 
-const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
-process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
 
-
-let socket;
 
 
 const User = ({ user }) => {
-
+    const onlineUsers = useSelector( state => state.users.onlineUsers );
+    
     const { name, picture, email, posts, creationDate, likedPosts, subID } = user;
 
     const [ showDetails, setShowDetails ] = useState(false);
@@ -24,26 +21,17 @@ const User = ({ user }) => {
 
     const handleClick = async () => {
         
-        //setShowDetails(!showDetails);
-        //console.log(showDetails);
     }
 
-    let loggedUser = JSON.parse(localStorage.getItem('user'));
+    useEffect(()=>{
+        const isOnline = onlineUsers.includes(subID);
+        setOnline(isOnline);
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[onlineUsers])
 
     
 
-    useEffect(() => {
-        socket = io(ENDPOINT);
-
-        let loggedUserSubID = loggedUser.sub;
-
-        if( loggedUserSubID === subID ){
-            socket.emit('join');
-            socket.on('online', ()=> setOnline(true))   
-        }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [loggedUser])
 
 
     return (

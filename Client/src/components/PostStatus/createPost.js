@@ -10,13 +10,11 @@ import { FaRegSmileBeam } from 'react-icons/fa';
 
 import { useDispatch } from 'react-redux';
 
-import {  addNewPost } from '../../redux/reducers/postReducer';
-
-import { createPost } from '../../axios/postService';
 
 let socket;
 
-const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`;
 
 
 const Post = () => {
@@ -29,28 +27,27 @@ const Post = () => {
         setPostMessage(postMessage.concat(e.native));
     }
 
-    const dispatch = useDispatch();
 
 
     let profileObj = localStorage.getItem('user');
     profileObj = JSON.parse(profileObj);
     const { picture, given_name, sub, name } = profileObj && profileObj;
 
+    const resetInput = () =>{
+        setPostMessage('')
+        setEmoji(false);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         socket = io(ENDPOINT);
 
-        let res = await createPost( postMessage, sub, picture, name );
+        await socket.emit('createPost', ({ postMessage, sub, picture, name }), () => {  
+            console.log('Creating post');
+            resetInput();
+        });    
 
-        socket.emit('createPost', ( res ), () => setPostMessage(''));
-
-        socket.on('newPost', newPost => {
-            dispatch(addNewPost(newPost))
-        })
-
-        setEmoji(false);
     }
 
     const handleEnter = (e) => {

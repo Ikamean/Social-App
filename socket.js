@@ -1,36 +1,44 @@
-const { removePost } = require('./utils/postsHandler');
+const { removePost, addPost, addPostComment } = require('./utils/postsHandler');
+const { addUser, removeUser} = require('./utils/usersHandler');
 
 
 module.exports = (io) => io.on('connect', (socket) => {
     
-    socket.on('join', () => {
-        
-        io.emit('online');
+    socket.on('join', ({ subID }) => {
+        let loggedUsers = addUser(subID);
+        io.emit('online', { onlineUsers : loggedUsers });
     });
 
-    socket.on('createPost', (res, callback) => {
+    socket.on('logout', ({ subID }) => {
+        removeUser(subID);
+    })
+
+    socket.on('createPost', async ({ postMessage, sub, picture, name }, callback) => {
+        let newPost = await addPost({ postMessage,sub,picture,name });
         
-        io.emit('newPost', { newPost : res });
+        
+        await io.emit('newPost', { newPost : newPost });
 
         callback();
     })
 
-    socket.on('removePost', async ( id ) => {
-        let updatedPosts = await removePost(id);
+    socket.on('removePost', async ({ id, authorId }) => {
+        
+        let removedPostId = await removePost({ id, authorId });
 
-        io.emit('updatePostsAfterRemovingOne', { posts : updatedPosts });
+        
+        io.emit('removedPostId', { removedPostId : removedPostId });
 
     });
 
-    socket.on('postComment', ( updatedPostWithComments, callback ) => {
+    socket.on('postComment', async ( {id, comment, sub, picture, name}) => {
+        let updatedPost = await addPostComment({ id, comment, sub, picture, name });
 
-        socket.emit('updatedPostWithComments', { post : updatedPostWithComments })
-
-        callback();
+        io.emit('updatedPostWithComments', { post : updatedPost })
     })
 
     socket.on('disconnect', () => {
-       // console.log('user disconnected');
+        
     });
 
 });

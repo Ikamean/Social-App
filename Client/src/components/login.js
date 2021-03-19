@@ -2,6 +2,8 @@ import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { verifyToken } from '../axios/loginService';
 
+import io from "socket.io-client";
+
 import { useDispatch } from 'react-redux';
 
 import { initializeAccount } from '../redux/reducers/accountReducer';
@@ -10,7 +12,11 @@ import styled from 'styled-components';
 import finalLogo from '../media/final.png';
 import { FcGoogle } from 'react-icons/fc';
 
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
 
+
+let socket;
 
 const client_id = process.env.REACT_APP_CLIENT_ID;
 
@@ -34,6 +40,11 @@ const Login = () => {
 
         await dispatch(initializeAccount(verification));
         // Save Liked Posts into Localstorage when log In
+
+
+        // send logged user to socket to add to logged users list and send list back
+        socket = io(ENDPOINT);
+        socket.emit('join', { subID : loggedUser.sub });
         
     }
     const onFailure = (res) => {

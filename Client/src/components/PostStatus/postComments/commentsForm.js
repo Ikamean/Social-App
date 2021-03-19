@@ -10,21 +10,16 @@ import { Picker } from 'emoji-mart';
 import { FaRegSmileBeam } from 'react-icons/fa';
 import { AiOutlineSend } from 'react-icons/ai';
 
-import { commentPost } from '../../../axios/postService';
-
-import { updatePostComments } from '../../../redux/reducers/postReducer';
-
-import { useDispatch } from 'react-redux';
 
 let socket;
-const ENDPOINT =  process.env.NODE_ENV === 'development' ? process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`
+const ENDPOINT =  process.env.NODE_ENV === 'development' ? 
+process.env.REACT_APP_ENDPOINT  : `https://social-app-bitcamp.herokuapp.com/`;
 
 
 
 
 const CommentsForm = ({ post }) => {
-    const dispatch = useDispatch();
-
+    
     const { id } = post;
     const loggedUser = JSON.parse(localStorage.getItem('user'));
     
@@ -41,22 +36,18 @@ const CommentsForm = ({ post }) => {
         setComment(e.target.value)
     }
 
-
+    const resetInput = () => {
+        setComment('');
+        setEmoji(false);
+    }
     const handleSubmit = async  (e) => {
         e.preventDefault();
 
         socket = io(ENDPOINT);
 
-        let res = await commentPost( id, comment, sub, picture, name );
+        socket.emit('postComment', { id, comment, sub, picture, name });
 
-        socket.emit('postComment', { updatedPostWithComments : res }, () => setComment(' '));
-
-        socket.on('updatedPostWithComments', ( { post }  ) => {
-            dispatch(updatePostComments(post.updatedPostWithComments));
-        })
-
-
-        setEmoji(false);
+        resetInput();
 
     }
 

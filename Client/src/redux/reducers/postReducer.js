@@ -16,10 +16,12 @@ const postReducer = (state=initialState, action) => {
             state = { ...state, posts: posts }
             return state;
         case 'New_Post' :
-            state = {...state, posts : state.posts.concat(action.data) }
+            state = {...state, posts : [...state.posts, action.data ] }
             return state;
         case 'Remove_Post' :
-            state = { ...state, posts: action.data }
+            let removedPostId = action.data;
+            let updatedPosts = state.posts.filter( post => post.id !== removedPostId );
+            state = { ...state, posts: updatedPosts }
             return state;
         default : return state
     }
