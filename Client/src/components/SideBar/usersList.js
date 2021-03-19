@@ -31,7 +31,13 @@ const Users = () => {
         socket.on('online', ({ onlineUsers }) => {
             dispatch(initOnlineUsers(onlineUsers))
             console.log(onlineUsers);
-        })
+        });
+
+        socket.on('userLoggedOut', ({ onlineUsers }) =>{
+            dispatch(initOnlineUsers(onlineUsers))
+            console.log(onlineUsers);
+        });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

@@ -10,7 +10,8 @@ module.exports = (io) => io.on('connect', (socket) => {
     });
 
     socket.on('logout', ({ subID }) => {
-        removeUser(subID);
+        let onlineUsers = removeUser(subID);
+        io.emit('userLoggedOut', { onlineUsers : onlineUsers });
     })
 
     socket.on('createPost', async ({ postMessage, sub, picture, name }, callback) => {
