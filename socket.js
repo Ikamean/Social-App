@@ -9,8 +9,9 @@ module.exports = (io) => io.on('connect', (socket) => {
         io.emit('online', { onlineUsers : loggedUsers });
     });
 
-    socket.on('logout', ({ subID }) => {
-        let onlineUsers = removeUser(subID);
+    socket.on('logout', ({ subID, users }) => {
+        let onlineUsers = removeUser(subID, users);
+        //console.log(onlineUsers);
         io.emit('userLoggedOut', { onlineUsers : onlineUsers });
     })
 

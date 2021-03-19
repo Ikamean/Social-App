@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import { FcGoogle } from 'react-icons/fc';
 import { BsFillCircleFill } from 'react-icons/bs';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 
@@ -27,6 +27,8 @@ const Logout = ({ open }) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
+    const onlineUsers = useSelector( state => state.users.onlineUsers );
+
     let profileObj = localStorage.getItem('user');
     profileObj = JSON.parse(profileObj);
     const { picture, name, sub } = profileObj;
@@ -34,7 +36,7 @@ const Logout = ({ open }) => {
 
     const onLogoutSuccess = (res) =>{
         socket = io(ENDPOINT);
-        socket.emit('logout', { subID : sub });
+        socket.emit('logout', { subID : sub, users : onlineUsers });
 
         dispatch( logoutAccount() );
         localStorage.clear();

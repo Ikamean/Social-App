@@ -13,10 +13,10 @@ const addUser = (subID) => {
 
 }
 
-const removeUser = (subID) => {
-    loggedUsers = loggedUsers.filter( id => id==!subID)
-
-    return loggedUsers;
+const removeUser = (subID, users ) => {
+    users = users.filter( id => id !== subID)
+    
+    return users;
 }
 
 module.exports= { addUser, removeUser }
